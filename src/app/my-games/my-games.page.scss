@@ -1,0 +1,15 @@
+.title{
+    font-weight: bold;
+}
+
+.display-col{
+    display: flex;
+    flex-direction: column;
+}
+
+.button{
+    display: flex;
+    align-items: flex-end;
+    height: 25px;
+    margin: 0px,4px,0px,4px;
+}

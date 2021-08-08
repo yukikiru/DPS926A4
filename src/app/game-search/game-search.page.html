@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Game Search</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="container">
+    <form [formGroup]="form">
+    <ion-list lines="none" class="ion-no-margin">
+      <ion-item>
+        <ion-searchbar formControlName="searchGames" (keyup.enter)="searchGame()" placeholder="Game Name"></ion-searchbar>
+      </ion-item>
+      <ion-item>
+        <ion-button id="button" color="medium" item-end [disabled]="!form.valid" (click)="searchGame()" >Search</ion-button>
+      </ion-item>
+    </ion-list>
+  </form>
+    <ion-card>
+      <div *ngIf="loading === false">
+      <ion-card-content *ngFor="let s of searchList, let i = index">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-row class="title">
+                {{s.name}}
+              </ion-row>
+              <ion-row>
+                <ion-label>Rating:&nbsp;</ion-label>
+                {{s.aggregated_rating}}
+              </ion-row>
+              <ion-row>
+                <ion-label>Release: </ion-label>
+                {{s.date}}
+              </ion-row>
+              <ion-row>
+                <ion-row>
+                  <ion-button color="primary" (click)="displayGame(i)">Details</ion-button>
+                </ion-row>
+              </ion-row>
+            </ion-col>
+            <ion-col *ngIf="s.cover !== 'NA'">
+              <ion-img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{{s.cover}}.jpg"></ion-img>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col id="button" *ngIf="!inList(i)">
+              <ion-button color="primary" (click)="addGame(i)">Add Game</ion-button>
+            </ion-col>
+            <ion-col id="button" *ngIf="inList(i)">
+              <ion-button color="danger" (click)="removeGame(i)">Remove Game</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </div>
+    <div *ngIf="loading === true">
+      <ion-card-content>
+        Loading...
+      </ion-card-content>
+    </div>
+    </ion-card>
+    
+  </div>
+</ion-content>

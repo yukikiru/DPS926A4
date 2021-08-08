@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Game Information</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-card>
+  <ion-card-header text-wrap>
+    <ion-card-title>{{game.name}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{{game.cover}}.jpg"></ion-img>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <span class="title">Release:</span>
+        </ion-col>
+        <ion-col>
+          {{game.date}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <span class="title">Rating:</span>
+        </ion-col>
+        <ion-col>
+          {{game.aggregated_rating}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <span class="title underline">Summary:</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          {{game.summary}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
+</ion-content>

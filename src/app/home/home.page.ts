@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { ApiService } from '../services/api.service';
+import { ManagerService } from '../services/manager.service';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +10,14 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(private api: ApiService,private storage: StorageService,private m:ManagerService,) {
+  }
 
+  ngOnInit(){
+    
+  }
+
+  ionViewWillEnter(){
+    this.m.myGames.gameList = this.storage.getAll();
+  }
 }

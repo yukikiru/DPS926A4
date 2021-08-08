@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Library</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content *ngFor="let g of games, let i = index">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-row class="title">
+              {{g.name}}
+            </ion-row>
+            <ion-row>
+              <ion-label>Rating:&nbsp;</ion-label>
+              {{g.aggregated_rating}}
+            </ion-row>
+            <ion-row>
+              <ion-label>Release: </ion-label>
+              {{g.date}}
+            </ion-row>
+            <ion-row class="button">
+              <ion-button color="primary" (click)="displayGame(i)">Details</ion-button>
+            </ion-row>
+            <ion-row class="button">
+              <ion-button color="danger" (click)="removeGame(i)">Remove</ion-button>
+            </ion-row>
+          </ion-col>
+          <ion-col>
+            <ion-img src="https://images.igdb.com/igdb/image/upload/t_cover_big/{{g.cover}}.jpg"></ion-img>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
