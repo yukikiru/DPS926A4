@@ -1,8 +1,9 @@
+/* eslint-disable */
 //Class for game from the API
 export class Game{
     id: number;
     aggregated_rating: number;
-    cover: string; //This will be the ID for the cover image from https://api.igdb.com/v4/covers
+    cover: string; //This will be the ID for the cover image from https://api.igdb.com/v4/covers and later converted to image_ID for cover
     first_release_date: number; //Time in Epoch time, will need to be converted
     name: string;
     summary: string;

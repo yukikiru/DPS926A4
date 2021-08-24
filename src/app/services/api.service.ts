@@ -1,9 +1,11 @@
+/* eslint-disable */
 import { Token } from '../models/token.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Creds } from '../config';
 import { Observable } from 'rxjs';
 import { Game } from '../models/game.model';
+import { PlatformModel } from '../models/platform.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -19,7 +21,7 @@ export class ApiService {
   
   constructor(private http: HttpClient) { 
     this.creds = new Creds();
-    this.CORS = "https://cors-bypas.herokuapp.com/"; //This is required to workaround CORS
+    this.CORS = "https://cors-anywhere.herokuapp.com/"; //This is required to workaround CORS
     this.tokenURL = `https://id.twitch.tv/oauth2/token?client_id=${this.creds.client_id}&client_secret=${this.creds.client_secret}&grant_type=${this.creds.grant_type}`;
     this.apiURL = `https://api.igdb.com/v4`;
     this.token = new Token();
@@ -43,7 +45,8 @@ export class ApiService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Client-ID':  this.creds.client_id,
-        Authorization: `${this.token.token_type} ${this.token.access_token}`
+        Authorization: `${this.token.token_type} ${this.token.access_token}`,
+        'X-Requested-With': 'XMLHttpRequest'
       })
     };
     let searchList = new Array<Game>();
@@ -76,6 +79,11 @@ export class ApiService {
               searchList[i].date = d.toDateString();  
             }
           }
+          let plat = new PlatformModel();
+          this.getPlatformInfo(`fields abbreviation,alternative_name,name,platform_logo; where id = 48;`).subscribe((p) => {
+            plat = p;
+            console.log(plat);
+          });
           //After data is received from API for games, gets cover ID from covers
           for(var i = 0; i < searchList.length; i++){
             this.getCoverID(`fields image_id; where id = ${searchList[i].cover};`).toPromise().then( //Get cover image id's
@@ -108,6 +116,22 @@ export class ApiService {
     return this.http.post<any>(`${this.CORS}${this.apiURL}/covers`,body,httpOptions).pipe(
       map(data => {
         return data;
+      })
+    );
+  }
+
+  getPlatformInfo(body:string):Observable<PlatformModel>{
+    let plat = new PlatformModel();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Client-ID':  this.creds.client_id,
+        Authorization: `${this.token.token_type} ${this.token.access_token}`
+      })
+    };
+    return this.http.post<any>(`${this.CORS}${this.apiURL}/platforms`,body,httpOptions).pipe(
+      map(data => {
+        plat = data;
+        return plat;
       })
     );
   }

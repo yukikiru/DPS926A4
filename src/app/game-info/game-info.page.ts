@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Game } from '../models/game.model';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-game-info',
@@ -9,10 +9,12 @@ import { Game } from '../models/game.model';
 })
 export class GameInfoPage implements OnInit {
 
-  game:Game;
+  game: Game;
 
-  constructor() {}
-
+  constructor(private alert: AlertController) {}
+  func(){
+    this.alert.create();
+  }
   ngOnInit() {
     this.game = history.state;
   }
